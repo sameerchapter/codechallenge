@@ -116,7 +116,7 @@ Please note that you need to be authenticated to access the `/products` page. Yo
 (4) Get the products from the Shopify API. <br>
 The requests to the ShopifyAPI should happen serverside. Therefore, the view needs to make a call to the route that we just created in (3). The index method of `App\Http\ProductController.php` should process the request and fetch the products. 
 <br><br>
-(5) Make sure that the products are loaded when the page is loaded and when the user enters a searchterm.
+(5) Make sure that the products are loading as soon as the page is loaded and whenever the user enters a searchterm
 
 The `resources\Pages\Products.vue` already shows a basic "blueprint" that you CAN use to save some time. 
 
