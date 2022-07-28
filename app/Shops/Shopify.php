@@ -26,9 +26,10 @@ class Shopify
          * TO DO
          * Insert the config variables from config/shopify.php
          */
+        
         $config = [
-            'AccessToken' => null, #Insert config
-            'ShopUrl' => null #Insert config
+            'AccessToken' => "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", #Insert config
+            'ShopUrl' => "https://pine-roots.myshopify.com" #Insert config
         ];
 
         $shopifySDK = new ShopifySDK($config);

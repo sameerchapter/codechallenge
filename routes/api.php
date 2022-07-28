@@ -24,5 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  * Add GET route to 'products/index', call the index() method of ProductController and name the route api.products.index
  */
 Route::prefix('products')->group(function() {
-
+    Route::get('/',[App\Http\Controllers\ProductController::class, 'index'])->name('api.products.index');
+    
 });
