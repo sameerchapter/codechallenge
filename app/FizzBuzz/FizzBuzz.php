@@ -15,31 +15,28 @@ class FizzBuzz implements FizzBuzzInterface
     { 
        // to check if a number is divible by 3 or not
         
-        $number = $nr;
-        if ($number % 3 == 0 && $number % 7 == 0) { 
-            return "FizzBuzz";
-        } elseif ($number % 3 == 0) {            
-            return "Fizz";
-        } elseif ($number % 7 == 0) {           
-            return "Buzz";
-        } else {
-            return $number;                  
-        }
+        return self::getFizzBuzz($nr);
+        
     }
     public static function getRange(int $start, int $end, int $step = 1): array
     {
         $numberArray = [];
-        for ($i = $start; $i <= $end; $i += $step) {    
-            if ($i % 3 == 0 && $i % 7 == 0) {
-                $numberArray[] = "FizzBuzz";        
-            } elseif ($i % 3 == 0) {
-                $numberArray[] = "Fizz";
-            } elseif ($i % 7 == 0) {
-                $numberArray[] = "Buzz";
-            } else {
-                $numberArray[] = $i;
-            }
-        }
+        for ($i = $start; $i <= $end; $i += $step) 
+            $numberArray[]=self::getFizzBuzz($i);
+            
         return $numberArray;
+    }
+
+    public  static function getFizzBuzz(int $x)
+    {
+        if ($x % 3 == 0 && $x % 7 == 0) { 
+            return "FizzBuzz";
+        } elseif ($x % 3 == 0) {            
+            return "Fizz";
+        } elseif ($x % 7 == 0) {           
+            return "Buzz";
+        } else {
+            return $x;                  
+        }
     }
 }

@@ -31,12 +31,16 @@ import ProductCard from './ProductCard.vue'
             </div>
           </div>
         </div>
+        <div  v-if="isLoading">
+          <img  :src="'/img/loading.gif'" style="margin-left: 40%;" />
+          </div>
+
         <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
-          v-if="products.length > 0">
-           <ProductCard v-for="(product, productIndex) in products"  :image="product.image !== null ? product.image.src : ''" :title="product.title" :vendor="product.vendor" :created_at="product.created_at"  />
+          v-if="!isLoading && products.length">
+           <ProductCard v-for="(product, productIndex) in products"  :image="product.image !== null ? product.image.src : ''" :title="product.title" :vendor="product.vendor" :createdAt="formatDate(product.created_at)"  />
         </div>
 
-        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 text-center" v-else>No Product Available</h2>
+        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 text-center" v-if="!isLoading && !products.length">No Product Available</h2>
       </div>
     </div>
 
@@ -46,6 +50,7 @@ import ProductCard from './ProductCard.vue'
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 export default {
   name: 'GetProduct',
    components: {
@@ -53,6 +58,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       keyword: null,
       products: [],
       allproducts: []
@@ -64,6 +70,11 @@ export default {
     }
   },
   methods: {
+    formatDate(value) {
+      if (value) {
+        return moment(String(value)).format('YYYY.MM.DD')
+      }
+    },
     searchProduct() {
       this.products = this.allproducts.filter((product) => {
         return (
@@ -77,17 +88,16 @@ export default {
   mounted() {
     let reqRoute = route('api.products.index') //see routs/api.php
     axios
-      .get(reqRoute)
+      .get(reqRoute,{ params: { limit: 250 ,fields:"image,title,vendor,created_at",active:true}})
       .then(result => {
         this.products = result.data;
         this.allproducts = result.data;
       }).catch(error=>{
         console.log(error);
-      })
-
+      }).finally(() => {
+                   this.isLoading = false;
+                });
   },
-
-
 }
 </script>
 <style>

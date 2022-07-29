@@ -1,20 +1,11 @@
 <!-- ProductCard.vue -->
 <script>
-import moment from 'moment';
-
 export default {
   props:{  
     title: String,
     image: String,
-    created_at: String,
+    createdAt: String,
     vendor: String,
-  },
-  methods: {
-  formatDate(value) {
-      if (value) {
-        return moment(String(value)).format('YYYY.MM.DD')
-      }
-    },
   }
 }
 </script>
@@ -34,7 +25,7 @@ export default {
                     <span v-html="title"></span>
                   </a>
                 </h3>
-                <p class="mt-1 text-sm text-gray-500">{{ formatDate(created_at) }}</p>
+                <p class="mt-1 text-sm text-gray-500">{{ createdAt }}</p>
               </div>
               <p class="text-sm font-medium text-gray-900">{{ vendor }}</p>
             </div>

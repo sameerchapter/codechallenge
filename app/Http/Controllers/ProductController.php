@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use PHPShopify\ShopifySDK;
 use Log;
+use Validator;
 
 class ProductController extends Controller
 {
@@ -19,6 +20,17 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        // Validate 
+        $validator = Validator::make($request->all(),[
+            'active'=>'required',
+            'limit'=>'required',
+            'fields'=>'required'
+         ]);
+
+         if ($validator->fails()) {    
+            return response()->json(['status' => 'error', 'message' =>$validator->errors(), 'code' => 422]);
+        }
+
         //Get the Shopify Products, catch/log exception
         $products = [];
         try {
@@ -27,9 +39,9 @@ class ProductController extends Controller
             $shopifySDK = $shopify->getShopifySDK();
 
             $filterParameters = [
-                'active' => true,
-                'limit' => 250,
-                'fields' => 'image,title,vendor,created_at',
+                'active' => $request->get('active'),
+                'limit' =>$request->get('limit'),
+                'fields' => $request->get('fields'),
             ];
 
             $products = $shopifySDK->Product()->get($filterParameters);
