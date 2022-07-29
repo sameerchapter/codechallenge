@@ -28,7 +28,7 @@ class ProductController extends Controller
          ]);
 
          if ($validator->fails()) {    
-            return response()->json(['status' => 'error', 'message' =>$validator->errors(), 'code' => 422]);
+            return response()->json(['status' => 'error', 'message' =>$validator->errors()],422);
         }
 
         //Get the Shopify Products, catch/log exception
@@ -48,7 +48,7 @@ class ProductController extends Controller
             return response()->json($products);
         } catch (Exception $e) {
             Log::info($e->getMessage());
-            return response()->json(['status' => 'error', 'message' => $e->getMessage(), 'code' => 500]);
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()],500);
         }
 
 
